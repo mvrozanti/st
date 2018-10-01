@@ -5,11 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-<<<<<<< HEAD
-static char *font = "Droid Sans Mono for Powerline Nerd Font Complete:pixelsize=14:antialias=true:autohint=true";
-=======
 static char *font = "Droid Sans Mono Slashed for Powerline:pixelsize=14:antialias=true:autohint=true";
->>>>>>> 9aea67091dcbeaa95ca39cc2b9bf88dbe839a5fd
 static int borderpx = 2;
 
 /*
