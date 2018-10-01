@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "mono:pixelsize=14:antialias=true:autohint=true";
+static char *font = "Droid Sans Mono Slashed for Powerline:pixelsize=14:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -16,7 +16,7 @@ static int borderpx = 2;
  * 4: value of shell in /etc/passwd
  * 5: value of shell in config.h
  */
-static char *shell = "/bin/sh";
+static char *shell = "/usr/bin/zsh";
 char *utmp = NULL;
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
@@ -60,7 +60,7 @@ static unsigned int cursorthickness = 2;
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
  * it
  */
-static int bellvolume = 0;
+static int bellvolume = 100;
 
 /* default TERM value */
 char *termname = "st-256color";
@@ -83,14 +83,14 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-unsigned int alpha = 0xed;
+unsigned int alpha = 0xdf;
 
 static const char *colorname[] = {
 	"#073642",  /*  0: black    */
 	"#dc322f",  /*  1: red      */
-	"#859900",  /*  2: green    */
-	"#b58900",  /*  3: yellow   */
-	"#268bd2",  /*  4: blue     */
+	"#850900",  /*  2: green    */
+	"#b50900",  /*  3: yellow   */
+	"#260bd2",  /*  4: blue     */
 	"#d33682",  /*  5: magenta  */
 	"#2aa198",  /*  6: cyan     */
 	"#eee8d5",  /*  7: white    */
@@ -131,7 +131,7 @@ static unsigned int cursorshape = 2;
  * Default columns and rows numbers
  */
 
-static unsigned int cols = 80;
+static unsigned int cols = 50;
 static unsigned int rows = 24;
 
 /*
@@ -199,7 +199,7 @@ MouseKey mkeys[] = {
 };
 
 /* Internal keyboard shortcuts. */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TERMMOD (ControlMask|ShiftMask)
 
 static Shortcut shortcuts[] = {
@@ -211,28 +211,22 @@ static Shortcut shortcuts[] = {
 	{ MODKEY|ShiftMask,     XK_Prior,       zoom,           {.f = +1} },
 	{ MODKEY|ShiftMask,     XK_Next,        zoom,           {.f = -1} },
 	{ MODKEY|ShiftMask,     XK_Home,        zoomreset,      {.f =  0} },
-	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_Insert,      clippaste,      {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_C,           clipcopy,       {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_V,           clippaste,      {.i =  0} },
+	{ ControlMask,          XK_C,           clipcopy,       {.i =  0} },
+	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
 	{ MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 	{ MODKEY,               XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ MODKEY,               XK_Page_Down,   kscrolldown,    {.i = -1} },
-	{ MODKEY,            	XK_k,  		kscrollup,      {.i =  1} },
-	{ MODKEY,            	XK_j,   	kscrolldown,    {.i =  1} },
-	{ MODKEY,            	XK_Up,  	kscrollup,      {.i =  1} },
-	{ MODKEY,            	XK_Down,   	kscrolldown,    {.i =  1} },
-	{ MODKEY,	        XK_u,		kscrollup,      {.i = -1} },
-	{ MODKEY,  		XK_d,		kscrolldown,   	{.i = -1} },
-	{ MODKEY|ShiftMask,     XK_Up,          zoom,           {.f = +1} },
-	{ MODKEY|ShiftMask,     XK_Down,        zoom,           {.f = -1} },
-	{ MODKEY|ShiftMask,     XK_K,           zoom,           {.f = +1} },
-	{ MODKEY|ShiftMask,     XK_J,           zoom,           {.f = -1} },
-	{ MODKEY|ShiftMask,     XK_U,           zoom,           {.f = +2} },
-	{ MODKEY|ShiftMask,     XK_D,           zoom,           {.f = -2} },
+	{ MODKEY,            	XK_k,  		    kscrollup,      {.i =  1} },
+	{ MODKEY,            	XK_j,   	    kscrolldown,    {.i =  1} },
+	{ MODKEY,            	XK_Up,  	    kscrollup,      {.i =  1} },
+	{ MODKEY,            	XK_Down,   	    kscrolldown,    {.i =  1} },
+	{ MODKEY,	            XK_u,		    kscrollup,      {.i = -1} },
+	{ MODKEY,  		        XK_d,		    kscrolldown,   	{.i = -1} },
+	{ ControlMask,          XK_Up,          zoom,           {.f = +1} },
+	{ ControlMask,          XK_Down,        zoom,           {.f = -1} },
 };
 
 /*
