@@ -5,6 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
+
 static char *font = "Droid Sans Mono Slashed for Powerline:pixelsize=14:antialias=true:autohint=true";
 static int borderpx = 2;
 
