@@ -465,6 +465,7 @@ static Key key[] = {
 	{ XK_F12, /* F36 */ ControlMask,    "\033[24;5~",    0,    0},
 	{ XK_F12, /* F48 */ Mod4Mask,       "\033[24;6~",    0,    0},
 	{ XK_F12, /* F60 */ Mod1Mask,       "\033[24;3~",    0,    0},
+	{ XK_A,   /* F60 */ TERMMOD,        "\033[65;5u",    0,    0},
 	{ XK_F13,           XK_NO_MOD,      "\033[1;2P",     0,    0},
 	{ XK_F14,           XK_NO_MOD,      "\033[1;2Q",     0,    0},
 	{ XK_F15,           XK_NO_MOD,      "\033[1;2R",     0,    0},
