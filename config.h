@@ -7,6 +7,7 @@
  */
 static char *font = "Droid Sans Mono Slashed for Powerline:pixelsize=18:antialias=true:autohint=true";
 static int borderpx = 2;
+// test
 
 /*
  * What program is execed by st depends of these precedence rules:
