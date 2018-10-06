@@ -5,8 +5,8 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Droid Sans Mono Slashed for Powerline:pixelsize=18:antialias=true:autohint=true";
-static int borderpx = 2;
+static char *font = "Droid Sans Mono Slashed for Powerline:pixelsize=18:antialias=true:autohint=true:letterSpace:15";
+static int borderpx = 1;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -54,7 +54,7 @@ static unsigned int blinktimeout = 800;
 /*
  * thickness of underline and bar cursors
  */
-static unsigned int cursorthickness = 2;
+static unsigned int cursorthickness = 1;
 
 /*
  * bell volume. It must be a value between -100 and 100. Use 0 for disabling
@@ -103,7 +103,7 @@ static const char *colorname[] = {
 	"#93a1a1",  /* 14: brcyan   */
 	"#fdf6e3",  /* 15: brwhite  */
 	/* more colors can be added after 255 to use with DefaultXX */
-	"black",   /* 256 -> bg */
+	"#ff0000",   /* 256 -> bg */
 	"#00cc00", /* 257 -> fg */
     "magenta"  /* 258 -> cursor */
 };
@@ -210,7 +210,7 @@ static Shortcut shortcuts[] = {
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
 	{ MODKEY|ShiftMask,     XK_Prior,       zoom,           {.f = +1} },
 	{ MODKEY|ShiftMask,     XK_Next,        zoom,           {.f = -1} },
-	{ ControlMask,          XK_0,        zoomreset,      {.f =  0} },
+	{ ControlMask,          XK_0,           zoomreset,      {.f =  0} },
 	{ ControlMask,          XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
@@ -509,4 +509,4 @@ static uint selmasks[] = {
 static char ascii_printable[] =
 	" !\"#$%&'()*+,-./0123456789:;<=>?"
 	"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
-	"`abcdefghijklmnopqrstuvwxyz{|}~≫";
+	"`abcdefghijklmnopqrstuvwxyz{|}~≫⋣⊐⌱⊶🕮原本肇";

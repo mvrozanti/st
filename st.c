@@ -239,9 +239,7 @@ static uchar utfmask[UTF_SIZ + 1] = {0xC0, 0x80, 0xE0, 0xF0, 0xF8};
 static Rune utfmin[UTF_SIZ + 1] = {       0,    0,  0x80,  0x800,  0x10000};
 static Rune utfmax[UTF_SIZ + 1] = {0x10FFFF, 0x7F, 0x7FF, 0xFFFF, 0x10FFFF};
 
-ssize_t
-xwrite(int fd, const char *s, size_t len)
-{
+ssize_t xwrite(int fd, const char *s, size_t len) {
 	size_t aux = len;
 	ssize_t r;
 
@@ -256,9 +254,7 @@ xwrite(int fd, const char *s, size_t len)
 	return aux;
 }
 
-void *
-xmalloc(size_t len)
-{
+void * xmalloc(size_t len) {
 	void *p = malloc(len);
 
 	if (!p)
@@ -267,27 +263,21 @@ xmalloc(size_t len)
 	return p;
 }
 
-void *
-xrealloc(void *p, size_t len)
-{
+void * xrealloc(void *p, size_t len) {
 	if ((p = realloc(p, len)) == NULL)
 		die("Out of memory\n");
 
 	return p;
 }
 
-char *
-xstrdup(char *s)
-{
+char * xstrdup(char *s) {
 	if ((s = strdup(s)) == NULL)
 		die("Out of memory\n");
 
 	return s;
 }
 
-size_t
-utf8decode(const char *c, Rune *u, size_t clen)
-{
+size_t utf8decode(const char *c, Rune *u, size_t clen) {
 	size_t i, j, len, type;
 	Rune udecoded;
 
@@ -310,9 +300,7 @@ utf8decode(const char *c, Rune *u, size_t clen)
 	return len;
 }
 
-Rune
-utf8decodebyte(char c, size_t *i)
-{
+Rune utf8decodebyte(char c, size_t *i) {
 	for (*i = 0; *i < LEN(utfmask); ++(*i))
 		if (((uchar)c & utfmask[*i]) == utfbyte[*i])
 			return (uchar)c & ~utfmask[*i];
@@ -320,9 +308,7 @@ utf8decodebyte(char c, size_t *i)
 	return 0;
 }
 
-size_t
-utf8encode(Rune u, char *c)
-{
+size_t utf8encode(Rune u, char *c) {
 	size_t len, i;
 
 	len = utf8validate(&u, 0);
@@ -338,15 +324,11 @@ utf8encode(Rune u, char *c)
 	return len;
 }
 
-char
-utf8encodebyte(Rune u, size_t i)
-{
+char utf8encodebyte(Rune u, size_t i) {
 	return utfbyte[i] | (u & ~utfmask[i]);
 }
 
-char *
-utf8strchr(char *s, Rune u)
-{
+char * utf8strchr(char *s, Rune u) {
 	Rune r;
 	size_t i, j, len;
 
@@ -361,9 +343,7 @@ utf8strchr(char *s, Rune u)
 	return NULL;
 }
 
-size_t
-utf8validate(Rune *u, size_t i)
-{
+size_t utf8validate(Rune *u, size_t i) {
 	if (!BETWEEN(*u, utfmin[i], utfmax[i]) || BETWEEN(*u, 0xD800, 0xDFFF))
 		*u = UTF_INVALID;
 	for (i = 1; *u > utfmax[i]; ++i)
@@ -387,16 +367,12 @@ static const char base64_digits[] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-char
-base64dec_getc(const char **src)
-{
+char base64dec_getc(const char **src) {
 	while (**src && !isprint(**src)) (*src)++;
 	return *((*src)++);
 }
 
-char *
-base64dec(const char *src)
-{
+char * base64dec(const char *src) {
 	size_t in_len = strlen(src);
 	char *result, *dst;
 
@@ -421,17 +397,13 @@ base64dec(const char *src)
 	return result;
 }
 
-void
-selinit(void)
-{
+void selinit(void) {
 	sel.mode = SEL_IDLE;
 	sel.snap = 0;
 	sel.ob.x = -1;
 }
 
-int
-tlinelen(int y)
-{
+int tlinelen(int y) {
 	int i = term.col;
 
 	if (TLINE(y)[i - 1].mode & ATTR_WRAP)
@@ -443,9 +415,7 @@ tlinelen(int y)
 	return i;
 }
 
-void
-selstart(int col, int row, int snap)
-{
+void selstart(int col, int row, int snap) {
 	selclear();
 	sel.mode = SEL_EMPTY;
 	sel.type = SEL_REGULAR;
@@ -459,9 +429,7 @@ selstart(int col, int row, int snap)
 	tsetdirt(sel.nb.y, sel.ne.y);
 }
 
-void
-selextend(int col, int row, int type, int done)
-{
+void selextend(int col, int row, int type, int done) {
 	int oldey, oldex, oldsby, oldsey, oldtype;
 
 	if (sel.mode == SEL_IDLE)
@@ -489,9 +457,7 @@ selextend(int col, int row, int type, int done)
 	sel.mode = done ? SEL_IDLE : SEL_READY;
 }
 
-void
-selnormalize(void)
-{
+void selnormalize(void) {
 	int i;
 
 	if (sel.type == SEL_REGULAR && sel.ob.y != sel.oe.y) {
@@ -517,9 +483,7 @@ selnormalize(void)
 		sel.ne.x = term.col - 1;
 }
 
-int
-selected(int x, int y)
-{
+int selected(int x, int y) {
 	if (sel.mode == SEL_EMPTY || sel.ob.x == -1 ||
 			sel.alt != IS_SET(MODE_ALTSCREEN))
 		return 0;
@@ -533,9 +497,7 @@ selected(int x, int y)
 	    && (y != sel.ne.y || x <= sel.ne.x);
 }
 
-void
-selsnap(int *x, int *y, int direction)
-{
+void selsnap(int *x, int *y, int direction) {
 	int newx, newy, xt, yt;
 	int delim, prevdelim;
 	Glyph *gp, *prevgp;
@@ -606,9 +568,7 @@ selsnap(int *x, int *y, int direction)
 	}
 }
 
-char *
-getsel(void)
-{
+char * getsel(void) {
 	char *str, *ptr;
 	int y, bufsize, lastx, linelen;
 	Glyph *gp, *last;
@@ -660,9 +620,7 @@ getsel(void)
 	return str;
 }
 
-void
-selclear(void)
-{
+void selclear(void) {
 	if (sel.ob.x == -1)
 		return;
 	sel.mode = SEL_IDLE;
@@ -670,9 +628,7 @@ selclear(void)
 	tsetdirt(sel.nb.y, sel.ne.y);
 }
 
-void
-die(const char *errstr, ...)
-{
+void die(const char *errstr, ...) {
 	va_list ap;
 
 	va_start(ap, errstr);
@@ -681,9 +637,7 @@ die(const char *errstr, ...)
 	exit(1);
 }
 
-void
-execsh(char *cmd, char **args)
-{
+void execsh(char *cmd, char **args) {
 	char *sh, *prog;
 	const struct passwd *pw;
 
@@ -726,9 +680,7 @@ execsh(char *cmd, char **args)
 	_exit(1);
 }
 
-void
-sigchld(int a)
-{
+void sigchld(int a) {
 	int stat;
 	pid_t p;
 
@@ -743,9 +695,7 @@ sigchld(int a)
 	exit(0);
 }
 
-void
-stty(char **args)
-{
+void stty(char **args) {
 	char cmd[_POSIX_ARG_MAX], **p, *q, *s;
 	size_t n, siz;
 
@@ -767,9 +717,7 @@ stty(char **args)
 		perror("Couldn't call stty");
 }
 
-int
-ttynew(char *line, char *cmd, char *out, char **args)
-{
+int ttynew(char *line, char *cmd, char *out, char **args) {
 	int m, s;
 
 	if (out) {
@@ -819,9 +767,7 @@ ttynew(char *line, char *cmd, char *out, char **args)
 	return cmdfd;
 }
 
-size_t
-ttyread(void)
-{
+size_t ttyread(void) {
 	static char buf[BUFSIZ];
 	static int buflen = 0;
 	int written;
@@ -844,9 +790,7 @@ ttyread(void)
 	return ret;
 }
 
-void
-ttywrite(const char *s, size_t n, int may_echo)
-{
+void ttywrite(const char *s, size_t n, int may_echo) {
 	const char *next;
 	Arg arg = (Arg) { .i = term.scr };
 
@@ -875,9 +819,7 @@ ttywrite(const char *s, size_t n, int may_echo)
 	}
 }
 
-void
-ttywriteraw(const char *s, size_t n)
-{
+void ttywriteraw(const char *s, size_t n) {
 	fd_set wfd, rfd;
 	ssize_t r;
 	size_t lim = 256;
@@ -932,9 +874,7 @@ write_error:
 	die("write error on tty: %s\n", strerror(errno));
 }
 
-void
-ttyresize(int tw, int th)
-{
+void ttyresize(int tw, int th) {
 	struct winsize w;
 
 	w.ws_row = term.row;
@@ -945,16 +885,12 @@ ttyresize(int tw, int th)
 		fprintf(stderr, "Couldn't set window size: %s\n", strerror(errno));
 }
 
-void
-ttyhangup()
-{
+void ttyhangup() {
 	/* Send SIGHUP to shell */
 	kill(pid, SIGHUP);
 }
 
-int
-tattrset(int attr)
-{
+int tattrset(int attr) {
 	int i, j;
 
 	for (i = 0; i < term.row-1; i++) {
@@ -967,9 +903,7 @@ tattrset(int attr)
 	return 0;
 }
 
-void
-tsetdirt(int top, int bot)
-{
+void tsetdirt(int top, int bot) {
 	int i;
 
 	LIMIT(top, 0, term.row-1);
@@ -979,9 +913,7 @@ tsetdirt(int top, int bot)
 		term.dirty[i] = 1;
 }
 
-void
-tsetdirtattr(int attr)
-{
+void tsetdirtattr(int attr) {
 	int i, j;
 
 	for (i = 0; i < term.row-1; i++) {
@@ -994,15 +926,11 @@ tsetdirtattr(int attr)
 	}
 }
 
-void
-tfulldirt(void)
-{
+void tfulldirt(void) {
 	tsetdirt(0, term.row-1);
 }
 
-void
-tcursor(int mode)
-{
+void tcursor(int mode) {
 	static TCursor c[2];
 	int alt = IS_SET(MODE_ALTSCREEN);
 
@@ -1014,9 +942,7 @@ tcursor(int mode)
 	}
 }
 
-void
-treset(void)
-{
+void treset(void) {
 	uint i;
 
 	term.c = (TCursor){{
@@ -1042,17 +968,13 @@ treset(void)
 	}
 }
 
-void
-tnew(int col, int row)
-{
+void tnew(int col, int row) {
 	term = (Term){ .c = { .attr = { .fg = defaultfg, .bg = defaultbg } } };
 	tresize(col, row);
 	treset();
 }
 
-void
-tswapscreen(void)
-{
+void tswapscreen(void) {
 	Line *tmp = term.line;
 
 	term.line = term.alt;
@@ -1061,9 +983,7 @@ tswapscreen(void)
 	tfulldirt();
 }
 
-void
-kscrolldown(const Arg* a)
-{
+void kscrolldown(const Arg* a) {
 	int n = a->i;
 
 	if (n < 0)
@@ -1079,9 +999,7 @@ kscrolldown(const Arg* a)
 	}
 }
 
-void
-kscrollup(const Arg* a)
-{
+void kscrollup(const Arg* a) {
 	int n = a->i;
 
 	if (n < 0)
@@ -1095,9 +1013,7 @@ kscrollup(const Arg* a)
 }
 
 
-void
-tscrolldown(int orig, int n, int copyhist)
-{
+void tscrolldown(int orig, int n, int copyhist) {
 	int i;
 	Line temp;
 
@@ -1122,9 +1038,7 @@ tscrolldown(int orig, int n, int copyhist)
 	selscroll(orig, n);
 }
 
-void
-tscrollup(int orig, int n, int copyhist)
-{
+void tscrollup(int orig, int n, int copyhist) {
 	int i;
 	Line temp;
 
@@ -1149,9 +1063,7 @@ tscrollup(int orig, int n, int copyhist)
 	selscroll(orig, -n);
 }
 
-void
-selscroll(int orig, int n)
-{
+void selscroll(int orig, int n) {
 	if (sel.ob.x == -1)
 		return;
 
@@ -1179,9 +1091,7 @@ selscroll(int orig, int n)
 	}
 }
 
-void
-tnewline(int first_col)
-{
+void tnewline(int first_col) {
 	int y = term.c.y;
 
 	if (y == term.bot) {
@@ -1192,9 +1102,7 @@ tnewline(int first_col)
 	tmoveto(first_col ? 0 : term.c.x, y);
 }
 
-void
-csiparse(void)
-{
+void csiparse(void) {
 	char *p = csiescseq.buf, *np;
 	long int v;
 
@@ -1223,15 +1131,11 @@ csiparse(void)
 }
 
 /* for absolute user moves, when decom is set */
-void
-tmoveato(int x, int y)
-{
+void tmoveato(int x, int y) {
 	tmoveto(x, y + ((term.c.state & CURSOR_ORIGIN) ? term.top: 0));
 }
 
-void
-tmoveto(int x, int y)
-{
+void tmoveto(int x, int y) {
 	int miny, maxy;
 
 	if (term.c.state & CURSOR_ORIGIN) {
@@ -1246,9 +1150,7 @@ tmoveto(int x, int y)
 	term.c.y = LIMIT(y, miny, maxy);
 }
 
-void
-tsetchar(Rune u, Glyph *attr, int x, int y)
-{
+void tsetchar(Rune u, Glyph *attr, int x, int y) {
 	static char *vt100_0[62] = { /* 0x41 - 0x7e */
 		"↑", "↓", "→", "←", "█", "▚", "☃", /* A - G */
 		0, 0, 0, 0, 0, 0, 0, 0, /* H - O */
@@ -1282,9 +1184,7 @@ tsetchar(Rune u, Glyph *attr, int x, int y)
 	term.line[y][x].u = u;
 }
 
-void
-tclearregion(int x1, int y1, int x2, int y2)
-{
+void tclearregion(int x1, int y1, int x2, int y2) {
 	int x, y, temp;
 	Glyph *gp;
 
@@ -1312,9 +1212,7 @@ tclearregion(int x1, int y1, int x2, int y2)
 	}
 }
 
-void
-tdeletechar(int n)
-{
+void tdeletechar(int n) {
 	int dst, src, size;
 	Glyph *line;
 
@@ -1329,9 +1227,7 @@ tdeletechar(int n)
 	tclearregion(term.col-n, term.c.y, term.col-1, term.c.y);
 }
 
-void
-tinsertblank(int n)
-{
+void tinsertblank(int n) {
 	int dst, src, size;
 	Glyph *line;
 
@@ -1346,23 +1242,17 @@ tinsertblank(int n)
 	tclearregion(src, term.c.y, dst - 1, term.c.y);
 }
 
-void
-tinsertblankline(int n)
-{
+void tinsertblankline(int n) {
 	if (BETWEEN(term.c.y, term.top, term.bot))
 		tscrolldown(term.c.y, n, 0);
 }
 
-void
-tdeleteline(int n)
-{
+void tdeleteline(int n) {
 	if (BETWEEN(term.c.y, term.top, term.bot))
 		tscrollup(term.c.y, n, 0);
 }
 
-int32_t
-tdefcolor(int *attr, int *npar, int l)
-{
+int32_t tdefcolor(int *attr, int *npar, int l) {
 	int32_t idx = -1;
 	uint r, g, b;
 
@@ -1410,9 +1300,7 @@ tdefcolor(int *attr, int *npar, int l)
 	return idx;
 }
 
-void
-tsetattr(int *attr, int l)
-{
+void tsetattr(int *attr, int l) {
 	int i;
 	int32_t idx;
 
@@ -1511,9 +1399,7 @@ tsetattr(int *attr, int l)
 	}
 }
 
-void
-tsetscroll(int t, int b)
-{
+void tsetscroll(int t, int b) {
 	int temp;
 
 	LIMIT(t, 0, term.row-1);
@@ -1527,9 +1413,7 @@ tsetscroll(int t, int b)
 	term.bot = b;
 }
 
-void
-tsetmode(int priv, int set, int *args, int narg)
-{
+void tsetmode(int priv, int set, int *args, int narg) {
 	int alt, *lim;
 
 	for (lim = args + narg; args < lim; ++args) {
@@ -1656,9 +1540,7 @@ tsetmode(int priv, int set, int *args, int narg)
 	}
 }
 
-void
-csihandle(void)
-{
+void csihandle(void) {
 	char buf[40];
 	int len;
 
@@ -1862,9 +1744,7 @@ csihandle(void)
 	}
 }
 
-void
-csidump(void)
-{
+void csidump(void) {
 	int i;
 	uint c;
 
@@ -1886,15 +1766,11 @@ csidump(void)
 	putc('\n', stderr);
 }
 
-void
-csireset(void)
-{
+void csireset(void) {
 	memset(&csiescseq, 0, sizeof(csiescseq));
 }
 
-void
-strhandle(void)
-{
+void strhandle(void) {
 	char *p = NULL;
 	int j, narg, par;
 
@@ -1957,9 +1833,7 @@ strhandle(void)
 	strdump();
 }
 
-void
-strparse(void)
-{
+void strparse(void) {
 	int c;
 	char *p = strescseq.buf;
 
@@ -1979,9 +1853,7 @@ strparse(void)
 	}
 }
 
-void
-strdump(void)
-{
+void strdump(void) {
 	int i;
 	uint c;
 
@@ -2006,22 +1878,16 @@ strdump(void)
 	fprintf(stderr, "ESC\\\n");
 }
 
-void
-strreset(void)
-{
+void strreset(void) {
 	memset(&strescseq, 0, sizeof(strescseq));
 }
 
-void
-sendbreak(const Arg *arg)
-{
+void sendbreak(const Arg *arg) {
 	if (tcsendbreak(cmdfd, 0))
 		perror("Error sending break");
 }
 
-void
-tprinter(char *s, size_t len)
-{
+void tprinter(char *s, size_t len) {
 	if (iofd != -1 && xwrite(iofd, s, len) < 0) {
 		perror("Error writing to output file");
 		close(iofd);
@@ -2029,9 +1895,7 @@ tprinter(char *s, size_t len)
 	}
 }
 
-void
-iso14755(const Arg *arg)
-{
+void iso14755(const Arg *arg) {
 	FILE *p;
 	char *us, *e, codepoint[9], uc[UTF_SIZ];
 	unsigned long utf32;
@@ -2051,27 +1915,19 @@ iso14755(const Arg *arg)
 	ttywrite(uc, utf8encode(utf32, uc), 1);
 }
 
-void
-toggleprinter(const Arg *arg)
-{
+void toggleprinter(const Arg *arg) {
 	term.mode ^= MODE_PRINT;
 }
 
-void
-printscreen(const Arg *arg)
-{
+void printscreen(const Arg *arg) {
 	tdump();
 }
 
-void
-printsel(const Arg *arg)
-{
+void printsel(const Arg *arg) {
 	tdumpsel();
 }
 
-void
-tdumpsel(void)
-{
+void tdumpsel(void) {
 	char *ptr;
 
 	if ((ptr = getsel())) {
@@ -2080,9 +1936,7 @@ tdumpsel(void)
 	}
 }
 
-void
-tdumpline(int n)
-{
+void tdumpline(int n) {
 	char buf[UTF_SIZ];
 	Glyph *bp, *end;
 
@@ -2095,18 +1949,14 @@ tdumpline(int n)
 	tprinter("\n", 1);
 }
 
-void
-tdump(void)
-{
+void tdump(void) {
 	int i;
 
 	for (i = 0; i < term.row; ++i)
 		tdumpline(i);
 }
 
-void
-tputtab(int n)
-{
+void tputtab(int n) {
 	uint x = term.c.x;
 
 	if (n > 0) {
@@ -2121,18 +1971,14 @@ tputtab(int n)
 	term.c.x = LIMIT(x, 0, term.col-1);
 }
 
-void
-tdefutf8(char ascii)
-{
+void tdefutf8(char ascii) {
 	if (ascii == 'G')
 		term.mode |= MODE_UTF8;
 	else if (ascii == '@')
 		term.mode &= ~MODE_UTF8;
 }
 
-void
-tdeftran(char ascii)
-{
+void tdeftran(char ascii) {
 	static char cs[] = "0B";
 	static int vcs[] = {CS_GRAPHIC0, CS_USA};
 	char *p;
@@ -2144,9 +1990,7 @@ tdeftran(char ascii)
 	}
 }
 
-void
-tdectest(char c)
-{
+void tdectest(char c) {
 	int x, y;
 
 	if (c == '8') { /* DEC screen alignment test. */
@@ -2157,9 +2001,7 @@ tdectest(char c)
 	}
 }
 
-void
-tstrsequence(uchar c)
-{
+void tstrsequence(uchar c) {
 	strreset();
 
 	switch (c) {
@@ -2181,9 +2023,7 @@ tstrsequence(uchar c)
 	term.esc |= ESC_STR;
 }
 
-void
-tcontrolcode(uchar ascii)
-{
+void tcontrolcode(uchar ascii) {
 	switch (ascii) {
 	case '\t':   /* HT */
 		tputtab(1);
@@ -2281,9 +2121,7 @@ tcontrolcode(uchar ascii)
  * returns 1 when the sequence is finished and it hasn't to read
  * more characters for this sequence, otherwise 0
  */
-int
-eschandle(uchar ascii)
-{
+int eschandle(uchar ascii) {
 	switch (ascii) {
 	case '[':
 		term.esc |= ESC_CSI;
@@ -2364,9 +2202,7 @@ eschandle(uchar ascii)
 	return 1;
 }
 
-void
-tputc(Rune u)
-{
+void tputc(Rune u) {
 	char c[UTF_SIZ];
 	int control;
 	int width, len;
@@ -2511,9 +2347,7 @@ check_control_code:
 	}
 }
 
-int
-twrite(const char *buf, int buflen, int show_ctrl)
-{
+int twrite(const char *buf, int buflen, int show_ctrl) {
 	int charsize;
 	Rune u;
 	int n;
@@ -2543,9 +2377,7 @@ twrite(const char *buf, int buflen, int show_ctrl)
 	return n;
 }
 
-void
-tresize(int col, int row)
-{
+void tresize(int col, int row) {
 	int i, j;
 	int minrow = MIN(row, term.row);
 	int mincol = MIN(col, term.col);
@@ -2633,15 +2465,11 @@ tresize(int col, int row)
 	term.c = c;
 }
 
-void
-resettitle(void)
-{
+void resettitle(void) {
 	xsettitle(NULL);
 }
 
-void
-drawregion(int x1, int y1, int x2, int y2)
-{
+void drawregion(int x1, int y1, int x2, int y2) {
 	int y;
 	for (y = y1; y < y2; y++) {
 		if (!term.dirty[y])
@@ -2652,9 +2480,7 @@ drawregion(int x1, int y1, int x2, int y2)
 	}
 }
 
-void
-draw(void)
-{
+void draw(void) {
 	int cx = term.c.x;
 
 	if (!xstartdraw())
@@ -2677,8 +2503,7 @@ draw(void)
 	xfinishdraw();
 }
 
-void
-redraw(void)
+void redraw(void)
 {
 	tfulldirt();
 	draw();
