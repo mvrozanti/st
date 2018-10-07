@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Droid Sans Mono Slashed for Powerline:pixelsize=18:antialias=true:autohint=true:letterSpace:15";
+static char *font = "Droid Sans Mono Slashed for Powerline:antialias=true:pixelsize=18:aspect=true";
 static int borderpx = 1;
 
 /*
@@ -227,6 +227,8 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,  		        XK_d,		    kscrolldown,   	{.i = -1} },
 	{ ControlMask,          XK_Up,          zoom,           {.f = +1} },
 	{ ControlMask,          XK_Down,        zoom,           {.f = -1} },
+	{ TERMMOD,              XK_Down,        alphadelta,     {.f =-10} },
+	{ TERMMOD,              XK_Up,          alphadelta,     {.f =+10} },
 };
 
 /*
@@ -347,7 +349,7 @@ static Key key[] = {
 	{ XK_Down,          Mod1Mask,       "\033[1;3B",     0,    0},
 	{ XK_Down,       ShiftMask|Mod1Mask,"\033[1;4B",     0,    0},
 	{ XK_Down,          ControlMask,    "\033[1;5B",     0,    0},
-	{ XK_Down,    ShiftMask|ControlMask,"\033[1;6B",     0,    0},
+// 	{ XK_Down,    ShiftMask|ControlMask,"\033[1;6B",     0,    0},
 	{ XK_Down,     ControlMask|Mod1Mask,"\033[1;7B",     0,    0},
 	{ XK_Down,ShiftMask|ControlMask|Mod1Mask,"\033[1;8B",0,    0},
 	{ XK_Down,          XK_ANY_MOD,     "\033[B",        0,   -1},
