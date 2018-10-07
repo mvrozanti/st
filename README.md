@@ -1,1 +1,1 @@
-![this took a while](https://i.imgur.com/RBWYccu.gif)
+![this took a while](transparency-demo.gif)
