@@ -71,6 +71,7 @@ static void zoom(const Arg *);
 static void zoomabs(const Arg *);
 static void zoomreset(const Arg *);
 static void alphadelta(const Arg *);
+static void alphaset(const Arg *);
 
 /* config.h for applying patches and the configuration. */
 #include "config.h"
@@ -285,6 +286,14 @@ void selpaste(const Arg *dummy) {
 
 void numlock(const Arg *dummy) {
 	win.mode ^= MODE_NUMLOCK;
+}
+
+void alphaset(const Arg *arg){
+    alpha = arg->f;
+    dc.col[defaultbg].color.alpha = (0xffff * alpha) / OPAQUE;
+    dc.col[defaultbg].pixel &= 0x00111111;
+    dc.col[defaultbg].pixel |= alpha << 24;
+	redraw();
 }
 
 void alphadelta(const Arg *arg){
