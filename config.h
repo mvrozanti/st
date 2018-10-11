@@ -363,7 +363,7 @@ static Key key[] = {
 	{ XK_Left,    ShiftMask|ControlMask,"\033[1;6D",     0,    0},
 	{ XK_Left,     ControlMask|Mod1Mask,"\033[1;7D",     0,    0},
 	{ XK_Left,ShiftMask|ControlMask|Mod1Mask,"\033[1;8D",0,    0},
-	{ XK_0,       ShiftMask|ControlMask,"\033[1;8D",     0,    0},
+	{ XK_0,       ShiftMask|ControlMask,"\033[1;8D",     0,  100},
 	{ XK_Left,          XK_ANY_MOD,     "\033[D",        0,   -1},
 	{ XK_Left,          XK_ANY_MOD,     "\033OD",        0,   +1},
 	{ XK_Right,         ShiftMask,      "\033[1;2C",     0,    0},
