@@ -297,7 +297,11 @@ void alphaset(const Arg *arg){
 }
 
 void alphadelta(const Arg *arg){
-    alpha -= arg->f;
+    if (arg->f > alpha){
+        alpha -= arg->f;
+    } else {
+        alpha = 0;
+    }
     dc.col[defaultbg].color.alpha = (0xffff * alpha) / OPAQUE;
     dc.col[defaultbg].pixel &= 0x00111111;
     dc.col[defaultbg].pixel |= alpha << 24;
