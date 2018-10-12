@@ -297,11 +297,13 @@ void alphaset(const Arg *arg){
 }
 
 void alphadelta(const Arg *arg){
-    alpha += arg->f;
-    dc.col[defaultbg].color.alpha = (0xffff * alpha) / OPAQUE;
-    dc.col[defaultbg].pixel &= 0x00111111;
-    dc.col[defaultbg].pixel |= alpha << 24;
-	redraw();
+    if(alpha - arg->f >= 0 || alpha + arg->f <= 255){
+        alpha += arg->f;
+        dc.col[defaultbg].color.alpha = (0xffff * alpha) / OPAQUE;
+        dc.col[defaultbg].pixel &= 0x00111111;
+        dc.col[defaultbg].pixel |= alpha << 24;
+        redraw();
+    } 
 }
 
 void zoom(const Arg *arg) {
