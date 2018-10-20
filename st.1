@@ -1,6 +1,6 @@
 .TH ST 1 st\-VERSION
 .SH NAME
-st \- simple terminal (Luke Smith's build)
+st \- simple terminal (Nexor's build)
 .SH SYNOPSIS
 .B st
 .RB [ \-aiv ]
@@ -15,7 +15,7 @@ st \- simple terminal (Luke Smith's build)
 .RB [ \-o
 .IR iofile ]
 .RB [ \-T
-.IR title ]
+.IR transparency level ]
 .RB [ \-t
 .IR title ]
 .RB [ \-l
@@ -81,8 +81,8 @@ writes all the I/O to
 This feature is useful when recording st sessions. A value of "-" means
 standard output.
 .TP
-.BI \-T " title"
-defines the window title (default 'st').
+.BI \-T " transparency level"
+defines the window alpha value ([0-255]).
 .TP
 .BI \-t " title"
 defines the window title (default 'st').

@@ -1898,11 +1898,11 @@ void config_init(void) {
 void usage(void) {
 	die("usage: %s [-aiv] [-c class] [-f font] [-g geometry]"
 	    " [-n name] [-o file]\n"
-	    "          [-T title] [-t title] [-w windowid]"
+	    "          [-T transparency level] [-t title] [-w windowid]"
 	    " [[-e] command [args ...]]\n"
 	    "       %s [-aiv] [-c class] [-f font] [-g geometry]"
 	    " [-n name] [-o file]\n"
-	    "          [-T title] [-t title] [-w windowid] -l line"
+	    "          [-T transparency level] [-t title] [-w windowid] -l line"
 	    " [stty_args ...]\n", argv0, argv0);
 }
 
@@ -1942,8 +1942,10 @@ int main(int argc, char *argv[]) {
 		opt_name = EARGF(usage());
 		break;
 	case 't':
-	case 'T':
 		opt_title = EARGF(usage());
+		break;
+	case 'T':
+        sscanf(EARGF(usage()), "%d", &alpha);
 		break;
 	case 'w':
 		opt_embed = EARGF(usage());
