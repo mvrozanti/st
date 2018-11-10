@@ -228,8 +228,8 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,  		        XK_d,		    kscrolldown,   	{.i =  -1} },
 	{ ControlMask,          XK_Up,          zoom,           {.f =   1} },
 	{ ControlMask,          XK_Down,        zoom,           {.f =  -1} },
-	{ TERMMOD,              XK_Down,        alphadelta,     {.f = -10} },
-	{ TERMMOD,              XK_Up,          alphadelta,     {.f =  10} },
+	{ TERMMOD,              XK_Down,        alphadelta,     {.f =  -5} },
+	{ TERMMOD,              XK_Up,          alphadelta,     {.f =   5} },
 	{ TERMMOD,              XK_parenright,  alphaset,       {.f =0xdf} },
 };
 
