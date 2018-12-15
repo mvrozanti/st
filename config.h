@@ -103,9 +103,10 @@ static const char *colorname[] = {
 	"#93a1a1",  /* 14: brcyan   */
 	"#fdf6e3",  /* 15: brwhite  */
 	/* more colors can be added after 255 to use with DefaultXX */
-	"#ff0000",   /* 256 -> bg */
+	"#00aa00",   /* 256 -> bg */
 	"#00cc00", /* 257 -> fg */
-    "magenta"  /* 258 -> cursor */
+    "magenta", /* 258 -> cursor */
+    "#00aa00"  /* 259 -> extra */
 };
 
 
@@ -168,7 +169,7 @@ ResourcePref resources[] = {
 		{ "color13",      STRING,  &colorname[13] },
 		{ "color14",      STRING,  &colorname[14] },
 		{ "color15",      STRING,  &colorname[15] },
-		{ "background",   STRING,  &colorname[256] },
+		{ "background",   STRING,  &colorname[259] },
 		{ "foreground",   STRING,  &colorname[257] },
 		{ "cursorColor",  STRING,  &colorname[258] },
 		{ "termname",     STRING,  &termname },
@@ -201,8 +202,8 @@ MouseKey mkeys[] = {
 /* Internal keyboard shortcuts. */
 #define MODKEY Mod4Mask
 #define TERMMOD (ControlMask|ShiftMask)
- 
-    
+
+
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
 	{ XK_ANY_MOD,           XK_Break,       sendbreak,      {.i =   0} },
@@ -228,6 +229,8 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,  		        XK_d,		    kscrolldown,   	{.i =  -1} },
 	{ ControlMask,          XK_Up,          zoom,           {.f =   1} },
 	{ ControlMask,          XK_Down,        zoom,           {.f =  -1} },
+	{ TERMMOD,              XK_J,           alphadelta,     {.f =  -5} },
+	{ TERMMOD,              XK_K,           alphadelta,     {.f =   5} },
 	{ TERMMOD,              XK_Down,        alphadelta,     {.f =  -5} },
 	{ TERMMOD,              XK_Up,          alphadelta,     {.f =   5} },
 	{ TERMMOD,              XK_parenright,  alphaset,       {.f =0xdf} },
