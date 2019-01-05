@@ -6,6 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font = "Droid Sans Mono Slashed for Powerline:rgba=1:pixelsize=18:aspect=true:autohint=true";
+// static char *font = "Fira Mono for Powerline:style=Regular";
 static int borderpx = 1;
 
 /*
